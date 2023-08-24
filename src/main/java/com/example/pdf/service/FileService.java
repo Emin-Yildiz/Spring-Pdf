@@ -15,4 +15,6 @@ public interface FileService {
     public void createPdfFile() throws IOException;
 
     public List<User> addUserFromPdfTabula(MultipartFile file) throws IOException;
+
+    void imageToPdf(MultipartFile file) throws IOException;
 }

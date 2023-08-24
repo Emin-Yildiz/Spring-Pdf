@@ -2,6 +2,7 @@ package com.example.pdf.service;
 
 import com.example.pdf.domain.User;
 import com.example.pdf.repositories.DbRepository;
+import com.example.pdf.util.ImageUtil;
 import com.example.pdf.util.ReadPdf;
 import com.example.pdf.util.TabulaUtil;
 import com.example.pdf.util.WritePdf;
@@ -21,13 +22,15 @@ public class FileServiceImpl implements FileService {
     private final WritePdf writePdf;
     private final ObjectMapper objectMapper;
     private final DbRepository dbRepository;
+    private final ImageUtil imageUtil;
 
-    public FileServiceImpl(TabulaUtil tabulaUtil, ReadPdf readPdf, WritePdf writePdf, ObjectMapper objectMapper, DbRepository dbRepository) {
+    public FileServiceImpl(TabulaUtil tabulaUtil, ReadPdf readPdf, WritePdf writePdf, ObjectMapper objectMapper, DbRepository dbRepository, ImageUtil imageUtil) {
         this.tabulaUtil = tabulaUtil;
         this.readPdf = readPdf;
         this.writePdf = writePdf;
         this.objectMapper = objectMapper;
         this.dbRepository = dbRepository;
+        this.imageUtil = imageUtil;
     }
 
     @Override
@@ -51,5 +54,10 @@ public class FileServiceImpl implements FileService {
     public List<User> addUserFromPdfTabula(MultipartFile file) throws IOException {
         tabulaUtil.setDocument(file);
         return dbRepository.saveAll(tabulaUtil.parseUsers());
+    }
+
+    @Override
+    public void imageToPdf(MultipartFile file) throws IOException {
+        imageUtil.setDocument(file);
     }
 }

@@ -2,6 +2,7 @@ package com.example.pdf.controller;
 
 import com.example.pdf.domain.User;
 import com.example.pdf.service.FileServiceImpl;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,11 @@ public class FileController {
     @PostMapping("/tabula")
     public ResponseEntity<List<User>> addUserFromPdfTabula(@RequestParam MultipartFile file) throws IOException {
         return new ResponseEntity<>(fileServiceImpl.addUserFromPdfTabula(file),HttpStatus.CREATED);
+    }
+
+    @PostMapping("/image")
+    public void imageToPdf(@RequestParam MultipartFile file) throws IOException {
+        fileServiceImpl.imageToPdf(file);
     }
 
     @PostMapping()
